@@ -1,0 +1,13 @@
+{
+    "Servers": {
+        "primer-impacto-db": {
+            "Name": "primer-impacto-db",
+            "Group": "Local",
+            "Host": "database",
+            "Port": 5432,
+            "MaintenanceDB": "postgres",
+            "Username": "primerImpactoUser",
+            "SSLMode": "prefer"
+        }
+    }
+}
