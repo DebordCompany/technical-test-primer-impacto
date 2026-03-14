@@ -1,7 +1,7 @@
 import { Controller, Get, HttpException, HttpStatus, Query } from '@nestjs/common';
-import { GetBalanceService } from '../../application/getBalance/getBalance.service';
+import { GetBalanceService } from '../../application/getBalance/get-balance.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { GetBalanceDto } from '../../application/getBalance/getBalance.dto';
+import { GetBalanceDto } from '../../application/getBalance/get-balance.dto';
 
 @Controller('balance')
 @ApiTags('balance')

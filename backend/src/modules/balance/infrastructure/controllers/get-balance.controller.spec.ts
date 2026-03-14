@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { GetBalanceController } from './getBalance.controller';
-import { GetBalanceService } from '../../application/getBalance/getBalance.service';
+import { GetBalanceController } from './get-balance.controller';
+import { GetBalanceService } from '../../application/getBalance/get-balance.service';
 
 describe('GetBalanceController', () => {
   let controller: GetBalanceController;

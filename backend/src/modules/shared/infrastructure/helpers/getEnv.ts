@@ -1,5 +1,13 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 export enum EnvKeyEnum {
-    RCC_API = 'RCC_API',
+    RCC_API = "RCC_API",
+    POSTGRES_PORT = "POSTGRES_PORT",
+    POSTGRES_USER = "POSTGRES_USER",
+    POSTGRES_PASSWORD = "POSTGRES_PASSWORD",
+    POSTGRES_DB = "POSTGRES_DB",
+    POSTGRES_HOST = "POSTGRES_HOST",
 }
 
 export const getEnv = (key: keyof typeof EnvKeyEnum): string => {
