@@ -7,7 +7,9 @@ import { GlobalExceptionFilter } from './modules/shared/infrastructure/helpers/E
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
+  app.enableCors({
+    origin: 'http://192.168.1.149:4300',
+  });
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new GlobalExceptionFilter());
   const config = new DocumentBuilder()
