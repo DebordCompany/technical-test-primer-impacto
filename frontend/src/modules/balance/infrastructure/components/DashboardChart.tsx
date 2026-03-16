@@ -1,14 +1,7 @@
 import { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
+import type { EnergyData } from "../../domain/types/ReeTypes";
 
-export type EnergyData = {
-    id: string;
-    energy_type: string;
-    group_id: string;
-    value: string;
-    percentage: number;
-    datetime: string;
-};
 
 type Props = {
     dataArr: EnergyData[];
