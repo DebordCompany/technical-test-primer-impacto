@@ -8,7 +8,7 @@ export enum EnvKeyEnum {
     POSTGRES_PASSWORD = "POSTGRES_PASSWORD",
     POSTGRES_DB = "POSTGRES_DB",
     POSTGRES_HOST = "POSTGRES_HOST",
-    VITE_BACK_API = "VITE_BACK_API",
+    FRONT_URL = "FRONT_URL",
 }
 
 export const getEnv = (key: keyof typeof EnvKeyEnum): string => {

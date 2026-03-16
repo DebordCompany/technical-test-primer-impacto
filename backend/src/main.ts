@@ -9,7 +9,7 @@ import { EnvKeyEnum, getEnv } from './modules/shared/infrastructure/helpers/getE
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
-    origin: getEnv(EnvKeyEnum.VITE_BACK_API),
+    origin: getEnv(EnvKeyEnum.FRONT_URL),
   });
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new GlobalExceptionFilter());
