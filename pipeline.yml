@@ -1,14 +1,16 @@
 services:
-
   database:
     image: postgres:latest
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
-    container_name: primer-impacto-db-dev
+    container_name: primer-impacto-db-pro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB} -h localhost"]
+      test: [
+        "CMD-SHELL",
+        "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB} -h localhost",
+      ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -17,61 +19,58 @@ services:
     volumes:
       - db_data:/var/lib/postgresql
     env_file:
-      - .env.local
+      - .env
     networks:
-      - primer-impacto-network-dev
-    
+      - primer-impacto-network-pro
+
   pgadmin:
     image: dpage/pgadmin4:latest
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
-    container_name: primer-impacto-pgadmin-dev
+    container_name: primer-impacto-pgadmin-pro
     ports:
       - "${PGADMIN_PORT}:80"
     volumes:
-      - ./servers.local.json:/pgadmin4/servers.json
+      - ./servers.pro.json:/pgadmin4/servers.json
     env_file:
-      - .env.local
+      - .env
     networks:
-      - primer-impacto-network-dev
-  
+      - primer-impacto-network-pro
+
   front:
     build:
       context: ./frontend
-      dockerfile: dockerfile.local
-    container_name: primer-impacto-front-dev
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
+      dockerfile: dockerfile.pro
+      args:
+        - NODE_ENV=production
+        - VITE_BACK_API=${VITE_BACK_API}
+    container_name: primer-impacto-front-pro
     ports:
-      - "${FRONT_PORT}:5173"
+      - "${FRONT_PORT}:80"
     env_file:
-      - .env.local
+      - .env
     networks:
-      - primer-impacto-network-dev
-  
+      - primer-impacto-network-pro
+
   back:
     build:
       context: ./backend
-      dockerfile: dockerfile.local
-    container_name: primer-impacto-back-dev
-    volumes:
-      - ./backend:/app
-      - /app/node_modules
+      dockerfile: dockerfile.pro
+    container_name: primer-impacto-back-pro
     ports:
       - "${BACK_PORT}:3000"
     networks:
-      - primer-impacto-network-dev
+      - primer-impacto-network-pro
     environment:
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@database:5432/${POSTGRES_DB}
     depends_on:
       - database
     env_file:
-      - .env.local
-  
+      - .env
+
 networks:
-  primer-impacto-network-dev:
+  primer-impacto-network-pro:
     driver: bridge
 
 volumes:

@@ -1,7 +1,8 @@
 import { useQuery, type QueryStatus } from "@tanstack/react-query";
 import { createContext, useContext, useState, type ReactNode } from "react";
 import type { ApiRequestData, EnergyData } from "../../domain/types/ReeTypes";
-import { ApiReaderRepository } from "../repositories/ApiReaderRepository";
+import { BalanceFactory } from "../factories/BalanceFactory";
+import { GetReeDataDto } from "../../application/getReeData/GetReeDataDto";
 
 interface DasboardContextInterface {
     reeData: EnergyData[] | null;
@@ -30,8 +31,11 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
 
     const { data: reeData, status: reeStatus, error: reeError } = useQuery({
         queryKey: ["getReeData", filterData.startDate, filterData.endDate],
-        queryFn: () => ApiReaderRepository.getInstance().getReeData(filterData.startDate, filterData.endDate),
-        enabled: !!filterData.startDate && !!filterData.endDate,
+        queryFn: () => BalanceFactory.getReeBalanceFactory().execute(GetReeDataDto.fromPrimitives({
+            startDate: filterData.startDate,
+            endDate: filterData.endDate,
+        })),
+        enabled: !!filterData.startDate && !!filterData.endDate
     });
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -42,6 +46,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
             endDate: formData.get("endDate") as string,
         });
     }
+    console.log(reeData, reeStatus, reeError)
     return (
         <DashboardContext.Provider value={{
             reeData,
